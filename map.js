@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.min.js';
-import { createStory, paths, placeNames } from './story.js';
+import { createStory, paths, placeNames, endingMessage } from './story.js';
 import { createFigure } from './figures.js';
 const places={start:{x:-4.8,z:4},forest:{x:-4,z:.4},ridge:{x:-3.5,z:-3},camp:{x:-.3,z:.7},road:{x:-.6,z:3.9},gate:{x:3.43,z:-.5},castle:{x:2.5,z:-2.65}};
 const host=document.getElementById('scene'),map=document.getElementById('map'),markers=document.getElementById('markers');
@@ -149,6 +149,20 @@ const player=document.createElement('span');player.textContent=state.name;party.
 for(const name of state.allies){const tag=document.createElement('span');tag.className=name==='산제이'?'sanjay':'sharman';tag.textContent=name+(name==='샤르만'&&state.injured?' · 팔 부상':'');party.appendChild(tag);}
 }
 }
+function showEnding(){
+const overlay=document.getElementById('ending-overlay');
+const visible=story.view.id==='ending'&&story.state.delivered;
+const opening=visible&&overlay.hidden;
+overlay.hidden=!visible;
+if(opening){
+document.getElementById('ending-title').textContent=endingMessage.title;
+document.getElementById('ending-anniversary').textContent=endingMessage.anniversary;
+document.getElementById('ending-dedication').textContent=endingMessage.dedication;
+if(matchMedia('(max-width:750px) and (orientation:portrait)').matches){
+overlay.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+}
+}
+}
 function formationOffset(name,location){
   const side=name==='산제이'?-1:1;
   if(location==='castle')return name==='산제이'?[-1.35,.8]:[1.15,.45];
@@ -223,7 +237,7 @@ function update(){
 const p=places[current],state=story.state,canMove=state.canMove&&!moving;
 document.getElementById('place').textContent=story.view.title;
 document.getElementById('map-help').textContent=moving?'길을 따라 이동하는 중…':canMove?'밝은 발판이나 장소명을 선택하여 이동할 수 있습니다.':state.ended?'여정이 끝났습니다. 다른 길로 다시 시작할 수 있습니다.':state.delivered?'서신 전달을 마쳤습니다. 원한다면 성에 잠시 머물 수도 있을 것 같습니다.':story.view.input?'이름을 정하고 여정을 시작해 주세요.':'이야기를 읽고 행동을 선택해 주세요.';
-showPassage();renderActions();
+showPassage();renderActions();showEnding();
 for(const route of routes){
 const visible=canMove&&((route.from===current&&p.links.includes(route.to))||(route.to===current&&p.links.includes(route.from)));
 route.segments.forEach(segment=>{segment.visible=visible;});

@@ -5,7 +5,7 @@
 @font-face{font-family:'BookkMyungjo';src:url('./fonts/BookkMyungjo-Bd.woff2') format('woff2');font-style:normal;font-weight:700;font-display:swap}
 :root{--text-font:'BookkMyungjo',serif;--text-weight:400;color-scheme:dark;font-family:var(--text-font);font-weight:var(--text-weight);font-synthesis:none;color:#e8e8e4;background:#181818}
 *{box-sizing:border-box}body{margin:0}
-.wrap{max-width:1480px;margin:auto;padding:20px 24px 28px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:12px 28px}
+.wrap{max-width:1600px;margin:auto;padding:20px 24px 28px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:12px 28px}
 header{grid-column:1/-1;margin:0 0 8px}
 .map-section{grid-column:1;min-width:0}
 .eyebrow{color:#b0b0ac;font-size:12px;letter-spacing:.13em;margin:0 0 6px}
@@ -32,6 +32,16 @@ h1{font-size:24px;letter-spacing:-.035em;margin:0;font-weight:700}
 .north,.south{position:absolute;margin:0;font-family:'Shilla',system-ui,sans-serif;font-weight:500;font-size:13px;line-height:1.25;white-space:nowrap;pointer-events:none;color:#bcbcb8;transform-origin:center}
 .north{top:17px;left:18px}.south{bottom:auto;right:auto}
 .loading{position:absolute;inset:40% 15% auto;text-align:center;color:#bcbcb8;font-size:14px}
+.ending-overlay{position:absolute;inset:0;z-index:10;display:grid;place-items:center;overflow-y:auto;padding:clamp(20px,4vw,56px);background:rgb(0 0 0 / 70%);animation:ending-reveal .9s ease both}
+.ending-overlay[hidden]{display:none}
+.ending-message{width:100%;max-width:38rem;text-align:center;color:#f1efe9;word-break:keep-all;overflow-wrap:break-word}
+.ending-message h2,.ending-message p{white-space:pre-line}
+#ending-title{font-family:'Shilla',system-ui,-apple-system,sans-serif;font-weight:500;font-size:clamp(1.25rem,2.5vw,2rem);line-height:1.6;margin:0}
+.ending-anniversary{font-size:clamp(1rem,1.5vw,1.125rem);line-height:1.9;margin:24px 0 0;color:#deded8}
+.ending-dedication{font-size:clamp(1rem,1.5vw,1.125rem);line-height:1.8;margin:24px 0 0;color:#deded8}
+@keyframes ending-reveal{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ending-overlay{animation:none}}
+@media(max-height:600px) and (orientation:landscape){.ending-overlay{padding:16px 20px}.ending-anniversary{margin-top:12px;line-height:1.6}.ending-dedication{margin-top:16px;line-height:1.6}}
 .panel{grid-column:2;min-width:0;max-height:calc(clamp(440px,68svh,780px) + 52px);overflow-y:auto;overscroll-behavior:contain;padding:60px 12px 24px 28px;border-left:1px solid #373737}
 h2{font-size:23px;margin:0;line-height:1.4}
 #desc{font-family:var(--text-font);font-weight:var(--text-weight);font-size:16px;line-height:1.75;color:#d2d2ce;margin:0;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word}
